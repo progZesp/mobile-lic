@@ -13,7 +13,10 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.piotr.cowybrac.R
+import com.piotr.cowybrac.recyclerAdapters.HomeRecyclerAdapter
 import com.piotr.cowybrac.retrofit.rest.ApiClient
 import com.piotr.cowybrac.retrofit.rest.ApiService
 import com.piotr.cowybrac.retrofit.rest.restModel.Compare
@@ -28,22 +31,16 @@ import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
 import org.jsoup.select.Elements
 
-class HomeFragment : Fragment() {
-
-    private lateinit var homeViewModel: HomeViewModel
-    override fun onCreateView(
-            inflater: LayoutInflater,
-            container: ViewGroup?,
-            savedInstanceState: Bundle?
-    ): View? {
-        homeViewModel =
-                ViewModelProvider(this).get(HomeViewModel::class.java)
-        val root = inflater.inflate(R.layout.fragment_home, container, false)
-        return root
-    }
+class HomeFragment : Fragment(R.layout.fragment_home) {
+    private val myAdapter by lazy{ HomeRecyclerAdapter()}
+    private lateinit var layoutManager: LinearLayoutManager
+    private lateinit var recyclerView: RecyclerView
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        recyclerView = view.findViewById<RecyclerView>(R.id.home_recycler)
+        layoutManager = LinearLayoutManager(requireContext())
+        setupRecyclerView()
         val compositeDisposable = CompositeDisposable()
         val apiClient = ApiClient()
         compositeDisposable.add(
@@ -61,9 +58,12 @@ class HomeFragment : Fragment() {
     }
 
     private fun onResponse(response: List<Compare>){
-        Log.d("REST", response[0].firstUrl)
+        myAdapter.setData(response)
     }
-
+    private fun setupRecyclerView(){
+        recyclerView.adapter = myAdapter
+        recyclerView.layoutManager = layoutManager
+    }
     private suspend fun getTitle() {
         val connection: Connection.Response? = Jsoup.connect("https://allegro.pl/oferta/zestaw-lampka-rowerowa-led-przod-optima450-usb-tyl-10504495646")
                 .userAgent("Chrome/90.0.4430.212")

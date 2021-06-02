@@ -49,6 +49,9 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
 
+    //ui
+    implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.1.0"
+    //jsoup
     implementation 'org.jsoup:jsoup:1.13.1'
 
     //retrofit
