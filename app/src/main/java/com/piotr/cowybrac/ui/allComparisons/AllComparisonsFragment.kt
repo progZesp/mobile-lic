@@ -1,24 +1,14 @@
-package com.piotr.cowybrac.ui.home
+package com.piotr.cowybrac.ui.allComparisons
 
 import android.os.Bundle
 import android.util.Log
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
-import android.webkit.ValueCallback
-import android.webkit.WebView
-import android.webkit.WebViewClient
-import android.widget.TextView
-import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.piotr.cowybrac.R
 import com.piotr.cowybrac.recyclerAdapters.HomeRecyclerAdapter
 import com.piotr.cowybrac.retrofit.rest.ApiClient
-import com.piotr.cowybrac.retrofit.rest.ApiService
 import com.piotr.cowybrac.retrofit.rest.restModel.Compare
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
@@ -28,10 +18,8 @@ import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.launch
 import org.jsoup.Connection
 import org.jsoup.Jsoup
-import org.jsoup.nodes.Document
-import org.jsoup.select.Elements
 
-class HomeFragment : Fragment(R.layout.fragment_home) {
+class AllComparisonsFragment : Fragment(R.layout.all_comparisons) {
     private val myAdapter by lazy{ HomeRecyclerAdapter()}
     private lateinit var layoutManager: LinearLayoutManager
     private lateinit var recyclerView: RecyclerView
@@ -44,7 +32,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         val compositeDisposable = CompositeDisposable()
         val apiClient = ApiClient()
         compositeDisposable.add(
-            apiClient.getApiService(requireContext()).getCompares()
+            apiClient.getApiService(requireContext()).getComparisons()
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .subscribe({response -> onResponse(response)},{t -> onFailure(t)})

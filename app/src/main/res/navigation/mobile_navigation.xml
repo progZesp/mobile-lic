@@ -7,19 +7,19 @@
 
     <fragment
         android:id="@+id/navigation_home"
-        android:name="com.piotr.cowybrac.ui.home.HomeFragment"
+        android:name="com.piotr.cowybrac.ui.allComparisons.AllComparisonsFragment"
         android:label="@string/title_home"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/all_comparisons" />
 
     <fragment
         android:id="@+id/navigation_dashboard"
-        android:name="com.piotr.cowybrac.ui.dashboard.DashboardFragment"
+        android:name="com.piotr.cowybrac.ui.myComparisons.MyComparisonsFragment"
         android:label="@string/title_dashboard"
-        tools:layout="@layout/fragment_dashboard" />
+        tools:layout="@layout/my_comparisons" />
 
     <fragment
         android:id="@+id/navigation_notifications"
-        android:name="com.piotr.cowybrac.ui.notifications.NotificationsFragment"
+        android:name="com.piotr.cowybrac.ui.similarComparisons.SimilarComparisonsFragment"
         android:label="@string/title_notifications"
-        tools:layout="@layout/fragment_notifications" />
+        tools:layout="@layout/simmilar_comparisons" />
 </navigation>
